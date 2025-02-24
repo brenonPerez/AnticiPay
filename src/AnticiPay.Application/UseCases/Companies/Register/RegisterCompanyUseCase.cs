@@ -15,6 +15,7 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
 
     public async Task<ResponseRegisteredCompanyJson> Execute(RequestRegisterCompanyJson request)
     {
+        Validate(request);
         var company = new Company
         {
             Name = request.Name,
@@ -28,5 +29,15 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
         return new ResponseRegisteredCompanyJson{
             Name = company.Name,
         };
+    }
+
+    public static void Validate(RequestRegisterCompanyJson request)
+    {
+        var result = new RegisterCompanyValidator().Validate(request);
+
+        if (result.IsValid is false)
+        {
+            throw new Exception(result.Errors.ToString());
+        }
     }
 }
