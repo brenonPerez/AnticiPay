@@ -1,3 +1,4 @@
+using AnticiPay.Api.Filters;
 using AnticiPay.Application;
 using AnticiPay.Infrastructure;
 using AnticiPay.Infrastructure.Migrations;
@@ -8,6 +9,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);

@@ -3,6 +3,7 @@ using AnticiPay.Communication.Responses;
 using AnticiPay.Domain.Entities;
 using AnticiPay.Domain.Enums;
 using AnticiPay.Domain.Repositories.Companies;
+using AnticiPay.Exception.ExceptionsBase;
 
 namespace AnticiPay.Application.UseCases.Companies.Register;
 public class RegisterCompanyUseCase : IRegisterCompanyUseCase
@@ -37,7 +38,9 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
 
         if (result.IsValid is false)
         {
-            throw new Exception(result.Errors.ToString());
+            var errorMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
+
+            throw new ErrorOnValidationException(errorMessages);
         }
     }
 }
