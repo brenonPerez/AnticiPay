@@ -2,7 +2,7 @@
 using AnticiPay.Domain.Repositories.Companies;
 
 namespace AnticiPay.Infrastructure.DataAccess.Repositories.Companies;
-internal class CompanyRepository : ICompanyRepository
+internal class CompanyRepository : ICompanyWriteOnlyRepository
 {
     private readonly AnticiPayDbContext _dbContext;
     public CompanyRepository(AnticiPayDbContext dbContext)

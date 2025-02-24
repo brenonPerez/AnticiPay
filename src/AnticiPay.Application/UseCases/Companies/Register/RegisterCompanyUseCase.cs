@@ -9,9 +9,9 @@ using AutoMapper;
 namespace AnticiPay.Application.UseCases.Companies.Register;
 public class RegisterCompanyUseCase : IRegisterCompanyUseCase
 {
-    private readonly ICompanyRepository _companyRepository;
+    private readonly ICompanyWriteOnlyRepository _companyRepository;
     private readonly IMapper _mapper;
-    public RegisterCompanyUseCase(ICompanyRepository companyRepository,
+    public RegisterCompanyUseCase(ICompanyWriteOnlyRepository companyRepository,
         IMapper mapper)
     {
         _companyRepository = companyRepository;
