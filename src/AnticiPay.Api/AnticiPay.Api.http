@@ -1,0 +1,6 @@
+@AnticiPay.Api_HostAddress = http://localhost:5272
+
+GET {{AnticiPay.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnticiPay.Communication\AnticiPay.Communication.csproj" />
+    <ProjectReference Include="..\AnticiPay.Domain\AnticiPay.Domain.csproj" />
+    <ProjectReference Include="..\AnticiPay.Exception\AnticiPay.Exception.csproj" />
+  </ItemGroup>
+
+</Project>

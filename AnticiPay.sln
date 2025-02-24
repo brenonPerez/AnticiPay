@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B84DC955-EA0E-4F62-927C-8A3B71CA3FCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnticiPay.Api", "src\AnticiPay.Api\AnticiPay.Api.csproj", "{854DBBFB-D44E-496D-BFA9-A97A24C4BB10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnticiPay.Application", "src\AnticiPay.Application\AnticiPay.Application.csproj", "{B8AAE866-5F55-4688-A6DF-417192CB2CFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnticiPay.Communication", "src\AnticiPay.Communication\AnticiPay.Communication.csproj", "{C6080BB2-7EA9-4DEC-B514-4D22A2FE011F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnticiPay.Domain", "src\AnticiPay.Domain\AnticiPay.Domain.csproj", "{12FB89C0-49FB-4A53-B7D1-C464BDC70C2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnticiPay.Exception", "src\AnticiPay.Exception\AnticiPay.Exception.csproj", "{497C9CD2-7462-413D-961D-650B4C09CD43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnticiPay.Infrastructure", "src\AnticiPay.Infrastructure\AnticiPay.Infrastructure.csproj", "{10BCA548-51BB-4E87-B691-8CB7DDA3A614}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{854DBBFB-D44E-496D-BFA9-A97A24C4BB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854DBBFB-D44E-496D-BFA9-A97A24C4BB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854DBBFB-D44E-496D-BFA9-A97A24C4BB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854DBBFB-D44E-496D-BFA9-A97A24C4BB10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8AAE866-5F55-4688-A6DF-417192CB2CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8AAE866-5F55-4688-A6DF-417192CB2CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8AAE866-5F55-4688-A6DF-417192CB2CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8AAE866-5F55-4688-A6DF-417192CB2CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6080BB2-7EA9-4DEC-B514-4D22A2FE011F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6080BB2-7EA9-4DEC-B514-4D22A2FE011F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6080BB2-7EA9-4DEC-B514-4D22A2FE011F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6080BB2-7EA9-4DEC-B514-4D22A2FE011F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12FB89C0-49FB-4A53-B7D1-C464BDC70C2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FB89C0-49FB-4A53-B7D1-C464BDC70C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FB89C0-49FB-4A53-B7D1-C464BDC70C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FB89C0-49FB-4A53-B7D1-C464BDC70C2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{497C9CD2-7462-413D-961D-650B4C09CD43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{497C9CD2-7462-413D-961D-650B4C09CD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{497C9CD2-7462-413D-961D-650B4C09CD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{497C9CD2-7462-413D-961D-650B4C09CD43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10BCA548-51BB-4E87-B691-8CB7DDA3A614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10BCA548-51BB-4E87-B691-8CB7DDA3A614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10BCA548-51BB-4E87-B691-8CB7DDA3A614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10BCA548-51BB-4E87-B691-8CB7DDA3A614}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{854DBBFB-D44E-496D-BFA9-A97A24C4BB10} = {B84DC955-EA0E-4F62-927C-8A3B71CA3FCB}
+		{B8AAE866-5F55-4688-A6DF-417192CB2CFF} = {B84DC955-EA0E-4F62-927C-8A3B71CA3FCB}
+		{C6080BB2-7EA9-4DEC-B514-4D22A2FE011F} = {B84DC955-EA0E-4F62-927C-8A3B71CA3FCB}
+		{12FB89C0-49FB-4A53-B7D1-C464BDC70C2C} = {B84DC955-EA0E-4F62-927C-8A3B71CA3FCB}
+		{497C9CD2-7462-413D-961D-650B4C09CD43} = {B84DC955-EA0E-4F62-927C-8A3B71CA3FCB}
+		{10BCA548-51BB-4E87-B691-8CB7DDA3A614} = {B84DC955-EA0E-4F62-927C-8A3B71CA3FCB}
+	EndGlobalSection
+EndGlobal
