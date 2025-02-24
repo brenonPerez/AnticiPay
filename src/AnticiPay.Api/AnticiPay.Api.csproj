@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AnticiPay.Application\AnticiPay.Application.csproj" />
     <ProjectReference Include="..\AnticiPay.Communication\AnticiPay.Communication.csproj" />
     <ProjectReference Include="..\AnticiPay.Exception\AnticiPay.Exception.csproj" />
