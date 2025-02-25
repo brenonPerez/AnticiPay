@@ -1,8 +1,10 @@
 ﻿using AnticiPay.Domain.Repositories.Companies;
+using AnticiPay.Domain.Repositories.Invoices;
 using AnticiPay.Domain.Security.Cryptography;
 using AnticiPay.Domain.Security.Tokens;
 using AnticiPay.Infrastructure.DataAccess;
 using AnticiPay.Infrastructure.DataAccess.Repositories.Companies;
+using AnticiPay.Infrastructure.DataAccess.Repositories.Invoices;
 using AnticiPay.Infrastructure.Security.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,7 @@ public static class DependencyInjectionExtension
     {
         services.AddScoped<ICompanyWriteOnlyRepository, CompanyRepository>();
         services.AddScoped<ICompanyReadOnlyRepository, CompanyRepository>();
+        services.AddScoped<IInvoiceWriteOnlyRepository, InvoiceRespository>();
     }
 
     private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
