@@ -1,8 +1,9 @@
 ﻿using AnticiPay.Domain.Entities;
 using AnticiPay.Domain.Repositories.Invoices;
+using Microsoft.EntityFrameworkCore;
 
 namespace AnticiPay.Infrastructure.DataAccess.Repositories.Invoices;
-internal class InvoiceRespository : IInvoiceWriteOnlyRepository
+internal class InvoiceRespository : IInvoiceWriteOnlyRepository, IInvoiceReadOnlyRepository
 {
     private readonly AnticiPayDbContext _dbContext;
     public InvoiceRespository(AnticiPayDbContext dbContext)
@@ -14,5 +15,10 @@ internal class InvoiceRespository : IInvoiceWriteOnlyRepository
     {
         await _dbContext.Invoices.AddAsync(invoice);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExistInvoiceWithNumber(string number)
+    {
+        return await _dbContext.Invoices.AnyAsync(i => i.Number.Equals(number));
     }
 }
