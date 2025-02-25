@@ -1,4 +1,5 @@
 ﻿using AnticiPay.Domain.Repositories;
+using AnticiPay.Domain.Repositories.Carts;
 using AnticiPay.Domain.Repositories.Companies;
 using AnticiPay.Domain.Repositories.Invoices;
 using AnticiPay.Domain.Security.Cryptography;
@@ -6,6 +7,7 @@ using AnticiPay.Domain.Security.Tokens;
 using AnticiPay.Domain.Services.LoggedCompany;
 using AnticiPay.Infrastructure.DataAccess;
 using AnticiPay.Infrastructure.DataAccess.Repositories;
+using AnticiPay.Infrastructure.DataAccess.Repositories.Carts;
 using AnticiPay.Infrastructure.DataAccess.Repositories.Companies;
 using AnticiPay.Infrastructure.DataAccess.Repositories.Invoices;
 using AnticiPay.Infrastructure.Security.Tokens;
@@ -32,7 +34,10 @@ public static class DependencyInjectionExtension
         services.AddScoped<ICompanyReadOnlyRepository, CompanyRepository>();
         services.AddScoped<IInvoiceWriteOnlyRepository, InvoiceRespository>();
         services.AddScoped<IInvoiceReadOnlyRepository, InvoiceRespository>();
+        services.AddScoped<IInvoiceUpdateOnlyRepository, InvoiceRespository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ICartWriteOnlyRepository, CartRepository>();
+        services.AddScoped<ICartUpdateOnlyRepository, CartRepository>();
     }
 
     private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
