@@ -1,4 +1,5 @@
 ﻿using AnticiPay.Communication.Requests;
+using AnticiPay.Exception.Resources;
 using FluentValidation;
 
 namespace AnticiPay.Application.UseCases.Companies.Register;
@@ -8,33 +9,35 @@ public class RegisterCompanyValidator : AbstractValidator<RequestRegisterCompany
     {
         RuleFor(c => c.Cnpj)
             .NotEmpty()
-            .WithMessage("CNPJ is required")
+            .WithMessage(ResourceErrorMessages.CNPJ_IS_REQUIRED)
             .Must(CnpjValidator.IsValid)
-            .WithMessage("Invalid CNPJ");
+            .WithMessage(ResourceErrorMessages.INVALID_CNPJ);
 
         RuleFor(c => c.Name)
             .NotEmpty()
-            .WithMessage("Name is required");
+            .WithMessage(ResourceErrorMessages.NAME_IS_REQUIRED);
 
         RuleFor(c => c.MonthlyRevenue)
+            .NotEmpty()
+            .WithMessage(ResourceErrorMessages.MONTHLY_REVENUE_IS_REQUIRED)
             .GreaterThan(0)
-            .WithMessage("MonthlyRevenue must be greater than 0");
+            .WithMessage(ResourceErrorMessages.MONTHLY_REVENUE_GREATER_THAN_ZERO);
 
         RuleFor(c => c.BusinessType)
             .IsInEnum()
-            .WithMessage("Invalid BusinessType");
+            .WithMessage(ResourceErrorMessages.INVALID_BUSINESS_TYPE);
 
         RuleFor(c => c.Email)
             .NotEmpty()
-            .WithMessage("Email is required")
+            .WithMessage(ResourceErrorMessages.EMAIL_IS_REQUIRED)
             .EmailAddress()
             .When(c => string.IsNullOrEmpty(c.Email) is false, ApplyConditionTo.CurrentValidator)
-            .WithMessage("Invalid Email");
+            .WithMessage(ResourceErrorMessages.INVALID_EMAIL);
 
         RuleFor(c => c.Password)
             .NotEmpty()
-            .WithMessage("Password is required")
+            .WithMessage(ResourceErrorMessages.PASSWORD_IS_REQUIRED)
             .MinimumLength(6)
-            .WithMessage("Password must be at least 6 characters long");
+            .WithMessage(ResourceErrorMessages.INVALID_PASSWORD);
     }
 }

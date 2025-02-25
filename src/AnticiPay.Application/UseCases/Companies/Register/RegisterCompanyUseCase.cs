@@ -7,6 +7,7 @@ using AnticiPay.Domain.Security.Cryptography;
 using AnticiPay.Domain.Security.Tokens;
 using AnticiPay.Domain.Utils;
 using AnticiPay.Exception.ExceptionsBase;
+using AnticiPay.Exception.Resources;
 using AutoMapper;
 using FluentValidation.Results;
 
@@ -59,13 +60,13 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
         var emailAlreadyExists = await _companyReadOnlyRepository.ExistActiveCompanyWithEmail(request.Email);
         if (emailAlreadyExists)
         {
-            result.Errors.Add(new ValidationFailure(string.Empty, "Email already exists"));
+            result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.CNPJ_ALREADY_EXISTS));
         }
 
         var cnpjAlreadyExists = await _companyReadOnlyRepository.ExistActiveCompanyWhithCnpj(CnpjUtils.Normalize(request.Cnpj));
         if (cnpjAlreadyExists)
         {
-            result.Errors.Add(new ValidationFailure(string.Empty, "Cnpj already exists"));
+            result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.CNPJ_ALREADY_EXISTS));
         }
         
         if (result.IsValid is false)

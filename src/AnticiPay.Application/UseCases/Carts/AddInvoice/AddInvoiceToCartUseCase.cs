@@ -5,6 +5,7 @@ using AnticiPay.Domain.Repositories.Carts;
 using AnticiPay.Domain.Repositories.Invoices;
 using AnticiPay.Domain.Services.LoggedCompany;
 using AnticiPay.Exception.Exceptions;
+using AnticiPay.Exception.Resources;
 
 namespace AnticiPay.Application.UseCases.Carts.AddInvoice;
 public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
@@ -42,7 +43,7 @@ public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
         var invoice = await _invoiceUpdateOnlyRepository.GetInvoiceNotInCart(invoiceId);
         if (invoice is null)
         {
-            throw new NotFoundException("A nota fiscal não foi encontrada.");
+            throw new NotFoundException(ResourceErrorMessages.INVOICE_NOT_FOUND);
         }
         return invoice;
     }

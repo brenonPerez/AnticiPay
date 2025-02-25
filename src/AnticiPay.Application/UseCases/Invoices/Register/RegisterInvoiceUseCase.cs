@@ -5,6 +5,7 @@ using AnticiPay.Domain.Repositories;
 using AnticiPay.Domain.Repositories.Invoices;
 using AnticiPay.Domain.Services.LoggedCompany;
 using AnticiPay.Exception.ExceptionsBase;
+using AnticiPay.Exception.Resources;
 using AutoMapper;
 using FluentValidation.Results;
 
@@ -52,7 +53,7 @@ public class RegisterInvoiceUseCase : IRegisterInvoiceUseCase
         var numberAlreadyExists = await _invoiceReadOnlyRepository.ExistInvoiceWithNumber(request.Number);
         if (numberAlreadyExists)
         {
-            result.Errors.Add(new ValidationFailure(string.Empty, "Number already exists"));
+            result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.NUMBER_INVOICE_ALREADY_EXISTS));
         }
 
         if (result.IsValid is false)
