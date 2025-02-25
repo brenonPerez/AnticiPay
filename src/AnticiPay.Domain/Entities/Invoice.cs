@@ -8,4 +8,7 @@ public class Invoice
 
     public long CompanyId { get; set; }
     public Company Company { get; set; } = default!;
+
+    public long? CartId { get; set; }
+    public Cart? Cart { get; set; }
 }
