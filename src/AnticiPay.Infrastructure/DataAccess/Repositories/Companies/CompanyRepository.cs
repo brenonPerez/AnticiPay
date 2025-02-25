@@ -25,4 +25,11 @@ internal class CompanyRepository : ICompanyWriteOnlyRepository, ICompanyReadOnly
     {
         return await _dbContext.Companies.AnyAsync(c => c.Email.Equals(email));
     }
+
+    public async Task<Company?> GetCompanyByEmail(string email)
+    {
+        return await _dbContext.Companies
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.Email.Equals(email));
+    }
 }

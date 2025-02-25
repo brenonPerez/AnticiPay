@@ -1,5 +1,6 @@
 ﻿using AnticiPay.Application.AutoMapper;
 using AnticiPay.Application.UseCases.Companies.Register;
+using AnticiPay.Application.UseCases.Login.DoLogin;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AnticiPay.Application;
@@ -14,6 +15,7 @@ public static class DependencyInjectionExtension
     private static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<IRegisterCompanyUseCase, RegisterCompanyUseCase>();
+        services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
     }
 
     private static void AddAutoMapper(IServiceCollection services)
