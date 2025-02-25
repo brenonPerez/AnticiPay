@@ -1,5 +1,5 @@
 ﻿namespace AnticiPay.Communication.Requests;
-public class RequestAddInvoiceToCartJson
+public class RequestInvoiceCartJson
 {
     public long InvoiceId { get; set; }
 }

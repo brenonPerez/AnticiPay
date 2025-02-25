@@ -28,7 +28,7 @@ public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Execute(RequestAddInvoiceToCartJson request)
+    public async Task Execute(RequestInvoiceCartJson request)
     {
         var invoice = await GetInvoice(request.InvoiceId);
         var loggedCompany = await _loggedCompany.Get();

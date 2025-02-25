@@ -15,7 +15,7 @@ public class CartController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> AddInvoiceToCart(
         [FromServices] IAddInvoiceToCartUseCase useCase,
-        [FromBody] RequestAddInvoiceToCartJson request)
+        [FromBody] RequestInvoiceCartJson request)
     {
         await useCase.Execute(request);
 
