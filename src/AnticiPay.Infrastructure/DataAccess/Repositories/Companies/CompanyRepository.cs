@@ -13,7 +13,6 @@ internal class CompanyRepository : ICompanyWriteOnlyRepository, ICompanyReadOnly
     public async Task Add(Company company)
     {
         await _dbContext.Companies.AddAsync(company);
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<bool> ExistActiveCompanyWhithCnpj(string cnpj)

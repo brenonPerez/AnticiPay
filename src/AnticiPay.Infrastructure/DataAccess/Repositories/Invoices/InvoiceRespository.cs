@@ -14,7 +14,6 @@ internal class InvoiceRespository : IInvoiceWriteOnlyRepository, IInvoiceReadOnl
     public async Task Add(Invoice invoice)
     {
         await _dbContext.Invoices.AddAsync(invoice);
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<bool> ExistInvoiceWithNumber(string number)

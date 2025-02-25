@@ -1,6 +1,7 @@
 ﻿using AnticiPay.Communication.Requests;
 using AnticiPay.Communication.Responses;
 using AnticiPay.Domain.Entities;
+using AnticiPay.Domain.Repositories;
 using AnticiPay.Domain.Repositories.Companies;
 using AnticiPay.Domain.Security.Cryptography;
 using AnticiPay.Domain.Security.Tokens;
@@ -16,17 +17,20 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
     private readonly ICompanyReadOnlyRepository _companyReadOnlyRepository;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IPasswordEncripter _passwordEncripter;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     public RegisterCompanyUseCase(ICompanyWriteOnlyRepository companyWriteOnlyRepository,
         ICompanyReadOnlyRepository companyReadOnlyRepository,
         IAccessTokenGenerator accessTokenGenerator,
         IPasswordEncripter passwordEncripter,
+        IUnitOfWork unitOfWork,
         IMapper mapper)
     {
         _companyWriteOnlyRepository = companyWriteOnlyRepository;
         _companyReadOnlyRepository = companyReadOnlyRepository;
         _accessTokenGenerator = accessTokenGenerator;
         _passwordEncripter = passwordEncripter;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
@@ -39,6 +43,8 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
         company.Password = _passwordEncripter.Encrypt(request.Password);
 
         await _companyWriteOnlyRepository.Add(company);
+
+        await _unitOfWork.Commit();
 
         return new ResponseRegisteredCompanyJson { 
             Name = company.Name, 

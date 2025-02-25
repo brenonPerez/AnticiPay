@@ -1,6 +1,7 @@
 ﻿using AnticiPay.Communication.Requests;
 using AnticiPay.Communication.Responses;
 using AnticiPay.Domain.Entities;
+using AnticiPay.Domain.Repositories;
 using AnticiPay.Domain.Repositories.Invoices;
 using AnticiPay.Domain.Services.LoggedCompany;
 using AnticiPay.Exception.ExceptionsBase;
@@ -13,16 +14,19 @@ public class RegisterInvoiceUseCase : IRegisterInvoiceUseCase
     private readonly IInvoiceWriteOnlyRepository _invoiceWriteOnlyRepository;
     private readonly IInvoiceReadOnlyRepository _invoiceReadOnlyRepository;
     private readonly ILoggedCompany _loggedCompany;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     public RegisterInvoiceUseCase(
         IInvoiceWriteOnlyRepository invoiceWriteOnlyRepository,
         IInvoiceReadOnlyRepository invoiceReadOnlyRepository,
         ILoggedCompany loggedCompany,
+        IUnitOfWork unitOfWork,
         IMapper mapper)
     {
         _invoiceWriteOnlyRepository = invoiceWriteOnlyRepository;
         _invoiceReadOnlyRepository = invoiceReadOnlyRepository;
         _loggedCompany = loggedCompany;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
     public async Task<ResponseInvoiceJson> Execute(RequestInvoiceJson request)
@@ -35,6 +39,8 @@ public class RegisterInvoiceUseCase : IRegisterInvoiceUseCase
         invoice.CompanyId = loggedCompany.Id;
 
         await _invoiceWriteOnlyRepository.Add(invoice);
+
+        await _unitOfWork.Commit();
 
         return _mapper.Map<ResponseInvoiceJson>(invoice);
     }
