@@ -8,7 +8,7 @@ public class AutoMapping : Profile
 {
     public AutoMapping()
     {
-        CreateMap<Company, ResponseRegisteredCompanyJson>();
-        CreateMap<RequestRegisterCompanyJson, Company>();
+        CreateMap<RequestRegisterCompanyJson, Company>()
+            .ForMember(dest => dest.Password, config => config.Ignore());
     }
 }

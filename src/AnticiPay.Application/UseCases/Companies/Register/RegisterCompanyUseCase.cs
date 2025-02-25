@@ -2,6 +2,7 @@
 using AnticiPay.Communication.Responses;
 using AnticiPay.Domain.Entities;
 using AnticiPay.Domain.Repositories.Companies;
+using AnticiPay.Domain.Security.Cryptography;
 using AnticiPay.Domain.Security.Tokens;
 using AnticiPay.Domain.Utils;
 using AnticiPay.Exception.ExceptionsBase;
@@ -14,15 +15,18 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
     private readonly ICompanyWriteOnlyRepository _companyWriteOnlyRepository;
     private readonly ICompanyReadOnlyRepository _companyReadOnlyRepository;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
+    private readonly IPasswordEncripter _passwordEncripter;
     private readonly IMapper _mapper;
     public RegisterCompanyUseCase(ICompanyWriteOnlyRepository companyWriteOnlyRepository,
         ICompanyReadOnlyRepository companyReadOnlyRepository,
         IAccessTokenGenerator accessTokenGenerator,
+        IPasswordEncripter passwordEncripter,
         IMapper mapper)
     {
         _companyWriteOnlyRepository = companyWriteOnlyRepository;
         _companyReadOnlyRepository = companyReadOnlyRepository;
         _accessTokenGenerator = accessTokenGenerator;
+        _passwordEncripter = passwordEncripter;
         _mapper = mapper;
     }
 
@@ -32,6 +36,7 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
 
         var company = _mapper.Map<Company>(request);
         company.CompanyIdentifier = Guid.NewGuid();
+        company.Password = _passwordEncripter.Encrypt(request.Password);
 
         await _companyWriteOnlyRepository.Add(company);
 
