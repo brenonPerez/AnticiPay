@@ -10,6 +10,7 @@ public class CompanyController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisteredCompanyJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(
     [FromServices] IRegisterCompanyUseCase useCase,
     [FromBody] RequestRegisterCompanyJson request)
