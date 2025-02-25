@@ -2,6 +2,7 @@
 using AnticiPay.Communication.Responses;
 using AnticiPay.Domain.Entities;
 using AnticiPay.Domain.Repositories.Invoices;
+using AnticiPay.Domain.Services.LoggedCompany;
 using AnticiPay.Exception.ExceptionsBase;
 using AutoMapper;
 using FluentValidation.Results;
@@ -11,22 +12,27 @@ public class RegisterInvoiceUseCase : IRegisterInvoiceUseCase
 {
     private readonly IInvoiceWriteOnlyRepository _invoiceWriteOnlyRepository;
     private readonly IInvoiceReadOnlyRepository _invoiceReadOnlyRepository;
+    private readonly ILoggedCompany _loggedCompany;
     private readonly IMapper _mapper;
     public RegisterInvoiceUseCase(
         IInvoiceWriteOnlyRepository invoiceWriteOnlyRepository,
         IInvoiceReadOnlyRepository invoiceReadOnlyRepository,
+        ILoggedCompany loggedCompany,
         IMapper mapper)
     {
         _invoiceWriteOnlyRepository = invoiceWriteOnlyRepository;
         _invoiceReadOnlyRepository = invoiceReadOnlyRepository;
+        _loggedCompany = loggedCompany;
         _mapper = mapper;
     }
     public async Task<ResponseInvoiceJson> Execute(RequestInvoiceJson request)
     {
         await Validate(request);
 
+        var loggedCompany = await _loggedCompany.Get();
+
         var invoice = _mapper.Map<Invoice>(request);
-        invoice.CompanyId = 6;
+        invoice.CompanyId = loggedCompany.Id;
 
         await _invoiceWriteOnlyRepository.Add(invoice);
 
