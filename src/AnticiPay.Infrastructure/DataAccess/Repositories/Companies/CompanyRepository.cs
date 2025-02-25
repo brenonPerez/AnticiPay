@@ -1,8 +1,9 @@
 ﻿using AnticiPay.Domain.Entities;
 using AnticiPay.Domain.Repositories.Companies;
+using Microsoft.EntityFrameworkCore;
 
 namespace AnticiPay.Infrastructure.DataAccess.Repositories.Companies;
-internal class CompanyRepository : ICompanyWriteOnlyRepository
+internal class CompanyRepository : ICompanyWriteOnlyRepository, ICompanyReadOnlyRepository
 {
     private readonly AnticiPayDbContext _dbContext;
     public CompanyRepository(AnticiPayDbContext dbContext)
@@ -13,5 +14,15 @@ internal class CompanyRepository : ICompanyWriteOnlyRepository
     {
         await _dbContext.Companies.AddAsync(company);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExistActiveCompanyWhithCnpj(string cnpj)
+    {
+        return await _dbContext.Companies.AnyAsync(c => c.Cnpj.Equals(cnpj));
+    }
+
+    public async Task<bool> ExistActiveCompanyWithEmail(string email)
+    {
+        return await _dbContext.Companies.AnyAsync(c => c.Email.Equals(email));
     }
 }
