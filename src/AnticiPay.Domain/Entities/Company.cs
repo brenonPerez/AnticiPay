@@ -1,5 +1,5 @@
 ﻿using AnticiPay.Domain.Enums;
-using System.Text.RegularExpressions;
+using AnticiPay.Domain.Utils;
 
 namespace AnticiPay.Domain.Entities;
 public class Company
@@ -10,7 +10,7 @@ public class Company
     public string Cnpj
     {
         get => _cnpj;
-        set => _cnpj = NormalizeCnpj(value);
+        set => _cnpj = CnpjUtils.Normalize(value);
     }
     public string Name { get; set; } = string.Empty;
     public decimal MonthlyRevenue { get; set; }
@@ -18,11 +18,4 @@ public class Company
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public Guid CompanyIdentifier { get; set; }
-
-    private static string NormalizeCnpj(string cnpj)
-    {
-        return string.IsNullOrWhiteSpace(cnpj)
-            ? string.Empty
-            : Regex.Replace(cnpj, @"\D", "");
-    }
 }
