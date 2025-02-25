@@ -8,7 +8,19 @@ public class AutoMapping : Profile
 {
     public AutoMapping()
     {
+        RequestToEntity();
+        EntityToResponse();
+    }
+    private void RequestToEntity()
+    {
         CreateMap<RequestRegisterCompanyJson, Company>()
             .ForMember(dest => dest.Password, config => config.Ignore());
+
+        CreateMap<RequestInvoiceJson, Invoice>();
+    }
+
+    private void EntityToResponse()
+    {
+        CreateMap<Invoice, ResponseInvoiceJson>();
     }
 }
