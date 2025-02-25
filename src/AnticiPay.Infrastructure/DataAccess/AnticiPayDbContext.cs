@@ -9,4 +9,5 @@ internal class AnticiPayDbContext : DbContext
     }
 
     public DbSet<Company> Companies { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
 }
