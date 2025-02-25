@@ -1,4 +1,5 @@
-﻿using AnticiPay.Application.UseCases.Invoices.Register;
+﻿using AnticiPay.Application.UseCases.Invoices.GetAllNotInCart;
+using AnticiPay.Application.UseCases.Invoices.Register;
 using AnticiPay.Communication.Requests;
 using AnticiPay.Communication.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -20,5 +21,21 @@ public class InvoicesController : ControllerBase
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ResponseInvoicesJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> GetAllNotInCart(
+    [FromServices] IGetAllNotInCartInvoicesUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
+        if (response.Invoices.Count == 0)
+        {
+            return NoContent();
+        }
+
+        return Ok(response);
     }
 }
