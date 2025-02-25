@@ -2,6 +2,7 @@
 using AnticiPay.Communication.Responses;
 using AnticiPay.Domain.Entities;
 using AnticiPay.Domain.Repositories.Companies;
+using AnticiPay.Domain.Security.Tokens;
 using AnticiPay.Domain.Utils;
 using AnticiPay.Exception.ExceptionsBase;
 using AutoMapper;
@@ -12,13 +13,16 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
 {
     private readonly ICompanyWriteOnlyRepository _companyWriteOnlyRepository;
     private readonly ICompanyReadOnlyRepository _companyReadOnlyRepository;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IMapper _mapper;
     public RegisterCompanyUseCase(ICompanyWriteOnlyRepository companyWriteOnlyRepository,
         ICompanyReadOnlyRepository companyReadOnlyRepository,
+        IAccessTokenGenerator accessTokenGenerator,
         IMapper mapper)
     {
         _companyWriteOnlyRepository = companyWriteOnlyRepository;
         _companyReadOnlyRepository = companyReadOnlyRepository;
+        _accessTokenGenerator = accessTokenGenerator;
         _mapper = mapper;
     }
 
@@ -27,10 +31,14 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
         await Validate(request);
 
         var company = _mapper.Map<Company>(request);
+        company.CompanyIdentifier = Guid.NewGuid();
 
         await _companyWriteOnlyRepository.Add(company);
 
-        return _mapper.Map<ResponseRegisteredCompanyJson>(company);
+        return new ResponseRegisteredCompanyJson { 
+            Name = company.Name, 
+            Token = _accessTokenGenerator.Generate(company) 
+        };
     }
 
     public async Task Validate(RequestRegisterCompanyJson request)

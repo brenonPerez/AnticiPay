@@ -1,6 +1,8 @@
 ﻿using AnticiPay.Domain.Repositories.Companies;
+using AnticiPay.Domain.Security.Tokens;
 using AnticiPay.Infrastructure.DataAccess;
 using AnticiPay.Infrastructure.DataAccess.Repositories.Companies;
+using AnticiPay.Infrastructure.Security.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +14,7 @@ public static class DependencyInjectionExtension
     {
         services.AddDbContext(configuration);
         services.AddRepositories();
+        services.AddToken(configuration);
     }
 
     private static void AddRepositories(this IServiceCollection services)
@@ -27,5 +30,13 @@ public static class DependencyInjectionExtension
         var serverVersion = ServerVersion.AutoDetect(connectionString);
 
         services.AddDbContext<AnticiPayDbContext>(config => config.UseMySql(connectionString, serverVersion));
+    }
+
+    private static void AddToken(this IServiceCollection services, IConfiguration configuration)
+    {
+        var expirationTimeMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpiresMinutes");
+        var signingKey = configuration.GetValue<string>("Settings:Jwt:SigningKey");
+
+        services.AddScoped<IAccessTokenGenerator>(config => new JwtTokenGenerator(expirationTimeMinutes, signingKey!));
     }
 }
