@@ -63,7 +63,7 @@ public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
         else
         {
             cart.Invoices.Add(invoice);
-            _invoiceUpdateOnlyRepository.Update(invoice);
+            _cartUpdateOnlyRepository.Update(cart);
         }
         return cart;
     }

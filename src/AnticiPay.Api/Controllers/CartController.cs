@@ -24,7 +24,7 @@ public class CartController : ControllerBase
     }
 
     [HttpDelete("remove-invoice")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RemoveInvoiceFromCart(
     [FromServices] IRemoveInvoiceFromCartUseCase useCase,
@@ -32,6 +32,6 @@ public class CartController : ControllerBase
     {
         await useCase.Execute(request);
 
-        return Ok(string.Empty);
+        return NoContent();
     }
 }

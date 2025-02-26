@@ -1,4 +1,5 @@
 ﻿using AnticiPay.Domain.Entities;
+using AnticiPay.Domain.Enums;
 using AnticiPay.Domain.Repositories.Invoices;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,14 @@ internal class InvoiceRespository : IInvoiceWriteOnlyRepository, IInvoiceReadOnl
     public async Task<bool> ExistInvoiceWithNumber(string number)
     {
         return await _dbContext.Invoices.AnyAsync(i => i.Number.Equals(number));
+    }
+
+    public async Task<Invoice?> GetInvoiceFromOpenCart(long invoiceId, long companyId)
+    {
+        return await _dbContext.Invoices
+            .Include(i => i.Cart)
+            .Where(i => i.Id == invoiceId && i.CompanyId == companyId && i.CartId != null && i.Cart != null && i.Cart.Status == CartStatus.Open)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<Invoice?> GetInvoiceNotInCart(long invoiceId)

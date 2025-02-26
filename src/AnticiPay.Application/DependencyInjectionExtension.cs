@@ -1,5 +1,6 @@
 ﻿using AnticiPay.Application.AutoMapper;
 using AnticiPay.Application.UseCases.Carts.AddInvoice;
+using AnticiPay.Application.UseCases.Carts.RemoveInvoice;
 using AnticiPay.Application.UseCases.Companies.Register;
 using AnticiPay.Application.UseCases.Invoices.Register;
 using AnticiPay.Application.UseCases.Login.DoLogin;
@@ -20,6 +21,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
         services.AddScoped<IRegisterInvoiceUseCase, RegisterInvoiceUseCase>();
         services.AddScoped<IAddInvoiceToCartUseCase, AddInvoiceToCartUseCase>();
+        services.AddScoped<IRemoveInvoiceFromCartUseCase, RemoveInvoiceFromCartUseCase>();
     }
 
     private static void AddAutoMapper(IServiceCollection services)
