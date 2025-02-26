@@ -1,5 +1,6 @@
 ﻿using AnticiPay.Application.UseCases.Carts.AddInvoice;
 using AnticiPay.Application.UseCases.Carts.GetCartOpen;
+using AnticiPay.Application.UseCases.Carts.GetCartOpenDetails;
 using AnticiPay.Application.UseCases.Carts.RemoveInvoice;
 using AnticiPay.Communication.Requests;
 using AnticiPay.Communication.Responses;
@@ -37,11 +38,22 @@ public class CartController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("cart")]
+    [HttpGet("cart-open")]
     [ProducesResponseType(typeof(ResponseCartJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCartOpen(
         [FromServices] IGetCartOpenUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
+        return Ok(response);
+    }
+
+    [HttpGet("cart-open-details")]
+    [ProducesResponseType(typeof(ResponseCartDetailsJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCartOpenDetails(
+        [FromServices] IGetCartOpenDetailsUseCase useCase)
     {
         var response = await useCase.Execute();
 
