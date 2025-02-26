@@ -1,4 +1,6 @@
-﻿namespace AnticiPay.Domain.Entities;
+﻿using AnticiPay.Domain.Services.Tax;
+
+namespace AnticiPay.Domain.Entities;
 public class Invoice
 {
     public long Id { get; set; }
@@ -11,4 +13,11 @@ public class Invoice
 
     public long? CartId { get; set; }
     public Cart? Cart { get; set; }
+
+    public decimal? NetValueAtCheckout { get; set; }
+
+    public decimal CalculateNetValue(ITaxService taxService)
+    {
+        return taxService.CalculateNetValue(Amount, DueDate);
+    }
 }

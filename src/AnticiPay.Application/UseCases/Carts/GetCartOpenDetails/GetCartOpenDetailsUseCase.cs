@@ -39,13 +39,12 @@ public class GetCartOpenDetailsUseCase : IGetCartOpenDetailsUseCase
             CreditLimit = Math.Round(loggedCompany.GetCreditLimit(), 2),
             Invoices = cart.Invoices.Select(invoice => new ResponseInvoiceDetailsJson
             {
-                Number = invoice.Id,
+                Number = invoice.Number,
                 GrossValue = Math.Round(invoice.Amount, 2),
-                NetValue = _taxService.CalculateNetValue(invoice.Amount, invoice.DueDate)
+                NetValue = invoice.CalculateNetValue(_taxService)
             }).ToList(),
-            TotalNetValue = Math.Round(cart.Invoices.Sum(invoice =>
-                _taxService.CalculateNetValue(invoice.Amount, invoice.DueDate)), 2),
-            TotalGrossValue = Math.Round(cart.Invoices.Sum(invoice => invoice.Amount), 2)
+            TotalNetValue = Math.Round(cart.CalculateTotalNetValue(_taxService), 2),
+            TotalGrossValue = Math.Round(cart.TotalAmount, 2)
         };
     }
 }
