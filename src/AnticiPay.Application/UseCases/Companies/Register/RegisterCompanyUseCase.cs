@@ -1,11 +1,11 @@
 ﻿using AnticiPay.Communication.Requests;
 using AnticiPay.Communication.Responses;
 using AnticiPay.Domain.Entities;
+using AnticiPay.Domain.Extensions;
 using AnticiPay.Domain.Repositories;
 using AnticiPay.Domain.Repositories.Companies;
 using AnticiPay.Domain.Security.Cryptography;
 using AnticiPay.Domain.Security.Tokens;
-using AnticiPay.Domain.Utils;
 using AnticiPay.Exception.ExceptionsBase;
 using AnticiPay.Exception.Resources;
 using AutoMapper;
@@ -63,7 +63,7 @@ public class RegisterCompanyUseCase : IRegisterCompanyUseCase
             result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.CNPJ_ALREADY_EXISTS));
         }
 
-        var cnpjAlreadyExists = await _companyReadOnlyRepository.ExistActiveCompanyWhithCnpj(CnpjUtils.Normalize(request.Cnpj));
+        var cnpjAlreadyExists = await _companyReadOnlyRepository.ExistActiveCompanyWhithCnpj(CnpjExtensions.Normalize(request.Cnpj));
         if (cnpjAlreadyExists)
         {
             result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.CNPJ_ALREADY_EXISTS));

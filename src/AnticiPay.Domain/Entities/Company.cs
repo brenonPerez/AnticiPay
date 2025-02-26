@@ -1,5 +1,5 @@
 ﻿using AnticiPay.Domain.Enums;
-using AnticiPay.Domain.Utils;
+using AnticiPay.Domain.Extensions;
 using System.Data;
 
 namespace AnticiPay.Domain.Entities;
@@ -11,7 +11,7 @@ public class Company
     public string Cnpj
     {
         get => _cnpj;
-        set => _cnpj = CnpjUtils.Normalize(value);
+        set => _cnpj = CnpjExtensions.Normalize(value);
     }
     public string Name { get; set; } = string.Empty;
     public decimal MonthlyRevenue { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AnticiPay.Domain.Utils;
-public static class CnpjUtils
+namespace AnticiPay.Domain.Extensions;
+public static class CnpjExtensions
 {
     public static string Normalize(string cnpj)
     {
