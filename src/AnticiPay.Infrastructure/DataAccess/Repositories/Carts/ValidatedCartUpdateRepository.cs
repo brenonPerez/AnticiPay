@@ -1,12 +1,13 @@
 ﻿using AnticiPay.Domain.Entities;
+using AnticiPay.Domain.Extensions;
 using AnticiPay.Domain.Repositories.Carts;
 
 namespace AnticiPay.Infrastructure.DataAccess.Repositories.Carts;
-internal class ValidatedCartRepository : ICartUpdateOnlyRepository
+internal class ValidatedCartUpdateRepository : ICartUpdateOnlyRepository
 {
     private readonly ICartUpdateOnlyRepository _updateOnlyRepository;
 
-    public ValidatedCartRepository(ICartUpdateOnlyRepository updateOnlyRepository)
+    public ValidatedCartUpdateRepository(ICartUpdateOnlyRepository updateOnlyRepository)
     {
         _updateOnlyRepository = updateOnlyRepository;
     }
@@ -19,21 +20,13 @@ internal class ValidatedCartRepository : ICartUpdateOnlyRepository
     public async Task<Cart?> GetCartOpenByCompany(long companyId)
     {
         var cart = await _updateOnlyRepository.GetCartOpenByCompany(companyId);
-        RemoveExpiredInvoices(cart);
+        cart.RemoveExpiredInvoices();
         return cart;
     }
 
     public void Update(Cart cart)
     {
-        RemoveExpiredInvoices(cart);
+        cart.RemoveExpiredInvoices();
         _updateOnlyRepository.Update(cart);
-    }
-
-    private static void RemoveExpiredInvoices(Cart? cart)
-    {
-        if (cart != null)
-            cart.Invoices = cart.Invoices
-                .Where(invoice => invoice.DueDate.Date > DateTime.UtcNow.Date)
-                .ToList();
     }
 }

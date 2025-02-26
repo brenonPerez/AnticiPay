@@ -40,7 +40,8 @@ public static class DependencyInjectionExtension
         services.AddScoped<ICartUpdateOnlyRepository, CartRepository>();
         services.AddScoped<ICartReadOnlyRepository, CartRepository>();
 
-        services.Decorate<ICartUpdateOnlyRepository, ValidatedCartRepository>();
+        services.Decorate<ICartUpdateOnlyRepository, ValidatedCartUpdateRepository>();
+        services.Decorate<ICartReadOnlyRepository, ValidatedCartReadRepository>();
     }
 
     private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
