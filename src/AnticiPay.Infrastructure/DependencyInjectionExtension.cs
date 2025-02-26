@@ -38,6 +38,8 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICartWriteOnlyRepository, CartRepository>();
         services.AddScoped<ICartUpdateOnlyRepository, CartRepository>();
+
+        services.Decorate<ICartUpdateOnlyRepository, ValidatedCartRepository>();
     }
 
     private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)

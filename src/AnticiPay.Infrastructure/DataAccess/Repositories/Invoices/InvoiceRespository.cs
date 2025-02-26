@@ -26,6 +26,7 @@ internal class InvoiceRespository : IInvoiceWriteOnlyRepository, IInvoiceReadOnl
     {
         return await _dbContext.Invoices
             .Include(i => i.Cart)
+            .ThenInclude(c => c!.Invoices)
             .Where(i => i.Id == invoiceId && i.CompanyId == companyId && i.CartId != null && i.Cart != null && i.Cart.Status == CartStatus.Open)
             .FirstOrDefaultAsync();
     }
