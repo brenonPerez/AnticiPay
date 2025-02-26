@@ -3,6 +3,7 @@ using AnticiPay.Application.UseCases.Carts.AddInvoice;
 using AnticiPay.Application.UseCases.Carts.GetCartOpen;
 using AnticiPay.Application.UseCases.Carts.RemoveInvoice;
 using AnticiPay.Application.UseCases.Companies.Register;
+using AnticiPay.Application.UseCases.Invoices.GetAllNotInCart;
 using AnticiPay.Application.UseCases.Invoices.Register;
 using AnticiPay.Application.UseCases.Login.DoLogin;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IRegisterInvoiceUseCase, RegisterInvoiceUseCase>();
         services.AddScoped<IAddInvoiceToCartUseCase, AddInvoiceToCartUseCase>();
         services.AddScoped<IRemoveInvoiceFromCartUseCase, RemoveInvoiceFromCartUseCase>();
+        services.AddScoped<IGetAllNotInCartInvoicesUseCase, GetAllNotInCartInvoicesUseCase>();
         services.AddScoped<IGetCartOpenUseCase, GetCartOpenUseCase>();
     }
 
