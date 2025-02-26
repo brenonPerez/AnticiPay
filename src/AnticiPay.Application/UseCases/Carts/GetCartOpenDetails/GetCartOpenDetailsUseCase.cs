@@ -1,6 +1,7 @@
 ﻿using AnticiPay.Communication.Responses;
 using AnticiPay.Domain.Repositories.Carts;
 using AnticiPay.Domain.Services.LoggedCompany;
+using AnticiPay.Domain.Services.Tax;
 using AnticiPay.Exception.Exceptions;
 using AnticiPay.Exception.Resources;
 
@@ -9,13 +10,16 @@ public class GetCartOpenDetailsUseCase : IGetCartOpenDetailsUseCase
 {
     private readonly ICartReadOnlyRepository _cartReadOnlyRepository;
     private readonly ILoggedCompany _loggedCompany;
+    private readonly ITaxService _taxService;
 
     public GetCartOpenDetailsUseCase(
         ICartReadOnlyRepository cartReadOnlyRepository,
-        ILoggedCompany loggedCompany)
+        ILoggedCompany loggedCompany,
+        ITaxService taxService)
     {
         _cartReadOnlyRepository = cartReadOnlyRepository;
         _loggedCompany = loggedCompany;
+        _taxService = taxService;
     }
 
     public async Task<ResponseCartDetailsJson> Execute()
@@ -32,15 +36,16 @@ public class GetCartOpenDetailsUseCase : IGetCartOpenDetailsUseCase
         {
             CompanyName = loggedCompany.Name,
             Cnpj = loggedCompany.Cnpj,
-            CreditLimit = loggedCompany.GetCreditLimit(),
+            CreditLimit = Math.Round(loggedCompany.GetCreditLimit(), 2),
             Invoices = cart.Invoices.Select(invoice => new ResponseInvoiceDetailsJson
             {
                 Number = invoice.Id,
-                GrossValue = invoice.Amount,
-                NetValue = invoice.Amount * 0.953488m
+                GrossValue = Math.Round(invoice.Amount, 2),
+                NetValue = _taxService.CalculateNetValue(invoice.Amount, invoice.DueDate)
             }).ToList(),
-            TotalNetValue = cart.Invoices.Sum(invoice => invoice.Amount * 0.953488m),
-            TotalGrossValue = cart.Invoices.Sum(invoice => invoice.Amount)
+            TotalNetValue = Math.Round(cart.Invoices.Sum(invoice =>
+                _taxService.CalculateNetValue(invoice.Amount, invoice.DueDate)), 2),
+            TotalGrossValue = Math.Round(cart.Invoices.Sum(invoice => invoice.Amount), 2)
         };
     }
 }

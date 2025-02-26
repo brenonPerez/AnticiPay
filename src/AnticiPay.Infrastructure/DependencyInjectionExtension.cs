@@ -5,6 +5,7 @@ using AnticiPay.Domain.Repositories.Invoices;
 using AnticiPay.Domain.Security.Cryptography;
 using AnticiPay.Domain.Security.Tokens;
 using AnticiPay.Domain.Services.LoggedCompany;
+using AnticiPay.Domain.Services.Tax;
 using AnticiPay.Infrastructure.DataAccess;
 using AnticiPay.Infrastructure.DataAccess.Repositories;
 using AnticiPay.Infrastructure.DataAccess.Repositories.Carts;
@@ -12,6 +13,7 @@ using AnticiPay.Infrastructure.DataAccess.Repositories.Companies;
 using AnticiPay.Infrastructure.DataAccess.Repositories.Invoices;
 using AnticiPay.Infrastructure.Security.Tokens;
 using AnticiPay.Infrastructure.Services.LoggedCompany;
+using AnticiPay.Infrastructure.Services.Tax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +25,7 @@ public static class DependencyInjectionExtension
     {
         services.AddScoped<IPasswordEncripter, Security.Cryptography.BCrypt>();
         services.AddScoped<ILoggedCompany, LoggedCompany>();
+        services.AddScoped<ITaxService, TaxService>();
         services.AddDbContext(configuration);
         services.AddRepositories();
         services.AddToken(configuration);
