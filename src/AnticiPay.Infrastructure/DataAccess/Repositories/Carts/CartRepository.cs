@@ -2,7 +2,6 @@
 using AnticiPay.Domain.Enums;
 using AnticiPay.Domain.Repositories.Carts;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.Design;
 
 namespace AnticiPay.Infrastructure.DataAccess.Repositories.Carts;
 internal class CartRepository : ICartWriteOnlyRepository, ICartUpdateOnlyRepository, ICartReadOnlyRepository
