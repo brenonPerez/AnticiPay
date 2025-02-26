@@ -22,6 +22,13 @@ internal class InvoiceRespository : IInvoiceWriteOnlyRepository, IInvoiceReadOnl
         return await _dbContext.Invoices.AnyAsync(i => i.Number.Equals(number));
     }
 
+    public async Task<List<Invoice>> GetAllNotInCartByCompany(long companyId)
+    {
+        return await _dbContext.Invoices
+            .Where(i => i.CompanyId == companyId && i.CartId == null)
+            .ToListAsync();
+    }
+
     public async Task<Invoice?> GetInvoiceFromOpenCart(long invoiceId, long companyId)
     {
         return await _dbContext.Invoices

@@ -1,5 +1,9 @@
-﻿namespace AnticiPay.Domain.Repositories.Invoices;
+﻿using AnticiPay.Domain.Entities;
+
+namespace AnticiPay.Domain.Repositories.Invoices;
 public interface IInvoiceReadOnlyRepository
 {
     Task<bool> ExistInvoiceWithNumber(string number);
+
+    Task<List<Invoice>> GetAllNotInCartByCompany(long companyId);
 }
