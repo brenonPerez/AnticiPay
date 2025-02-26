@@ -17,4 +17,6 @@ public class Cart
     public CartStatus Status { get; set; } = CartStatus.Open;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public bool ExceedsCreditLimit => TotalAmount > Company.GetCreditLimit();
 }

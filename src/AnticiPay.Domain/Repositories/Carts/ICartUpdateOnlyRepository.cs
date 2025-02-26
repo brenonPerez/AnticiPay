@@ -5,4 +5,5 @@ public interface ICartUpdateOnlyRepository
 {
     void Update(Cart cart);
     Task<Cart?> GetCartOpenByCompany(long companyId);
+    void AttachCompany(Company company);
 }

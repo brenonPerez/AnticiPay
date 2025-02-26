@@ -3,13 +3,13 @@ using AnticiPay.Exception.Resources;
 using System.Net;
 
 namespace AnticiPay.Exception.Exceptions;
-public class InvalidLoginException : AnticiPayException
+public class CreditLimitExceededException : AnticiPayException
 {
-    public InvalidLoginException() : base(ResourceErrorMessages.EMAIL_OR_PASSWORD_INVALID)
+    public CreditLimitExceededException() : base(ResourceErrorMessages.CREDIT_LIMIT_EXCEEDED)
     {
     }
 
-    public override int StatusCode => (int)HttpStatusCode.Unauthorized;
+    public override int StatusCode => (int)HttpStatusCode.BadRequest;
 
     public override List<string> GetErrors()
     {

@@ -97,6 +97,15 @@ namespace AnticiPay.Exception.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Credit limit exceeded..
+        /// </summary>
+        public static string CREDIT_LIMIT_EXCEEDED {
+            get {
+                return ResourceManager.GetString("CREDIT_LIMIT_EXCEEDED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a The due date must be in the future..
         /// </summary>
         public static string DUE_DATE_MUST_BE_IN_THE_FUTURE {
@@ -120,6 +129,15 @@ namespace AnticiPay.Exception.Resources {
         public static string EMAIL_IS_REQUIRED {
             get {
                 return ResourceManager.GetString("EMAIL_IS_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Email or password invalid..
+        /// </summary>
+        public static string EMAIL_OR_PASSWORD_INVALID {
+            get {
+                return ResourceManager.GetString("EMAIL_OR_PASSWORD_INVALID", resourceCulture);
             }
         }
         

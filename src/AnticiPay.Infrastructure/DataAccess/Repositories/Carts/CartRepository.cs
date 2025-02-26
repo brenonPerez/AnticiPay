@@ -16,9 +16,17 @@ internal class CartRepository : ICartWriteOnlyRepository, ICartUpdateOnlyReposit
         await _dbContext.Carts.AddAsync(cart);
     }
 
+    public void AttachCompany(Company company)
+    {
+        _dbContext.Companies.Attach(company);
+        _dbContext.Entry(company).State = EntityState.Unchanged;
+    }
+
     public Task<Cart?> GetCartOpenByCompany(long companyId)
     {
         return _dbContext.Carts
+            .Include(c => c.Company)
+            .Include(c => c.Invoices)
             .FirstOrDefaultAsync(c => c.CompanyId == companyId && c.Status == CartStatus.Open);
     }
 

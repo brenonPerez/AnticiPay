@@ -33,7 +33,12 @@ public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
     {
         var invoice = await GetInvoice(request.InvoiceId);
         var loggedCompany = await _loggedCompany.Get();
-        await UpdateOrCreateCart(loggedCompany.Id, invoice);
+        var cart = await UpdateOrCreateCart(loggedCompany, invoice);
+
+        if (cart.ExceedsCreditLimit)
+        {
+            throw new CreditLimitExceededException();
+        }
 
         await _unitOfWork.Commit();
     }
@@ -48,23 +53,25 @@ public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
         return invoice;
     }
 
-    private async Task<Cart> UpdateOrCreateCart(long companyId, Invoice invoice)
+    private async Task<Cart> UpdateOrCreateCart(Company company, Invoice invoice)
     {
-        var cart = await _cartUpdateOnlyRepository.GetCartOpenByCompany(companyId);
+        var cart = await _cartUpdateOnlyRepository.GetCartOpenByCompany(company.Id);
         if (cart is null)
         {
+            _cartUpdateOnlyRepository.AttachCompany(company);
+
             cart = new Cart
             {
-                CompanyId = companyId,
-                Invoices = new List<Invoice> { invoice }
+                CompanyId = company.Id,
+                Company = company,
             };
             await _cartWriteOnlyRepository.Add(cart);
+            await _unitOfWork.Commit();
         }
-        else
-        {
-            cart.Invoices.Add(invoice);
-            _cartUpdateOnlyRepository.Update(cart);
-        }
+
+        cart.Invoices.Add(invoice);
+        _cartUpdateOnlyRepository.Update(cart);
+
         return cart;
     }
 }
