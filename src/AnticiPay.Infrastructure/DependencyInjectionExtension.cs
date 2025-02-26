@@ -38,6 +38,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICartWriteOnlyRepository, CartRepository>();
         services.AddScoped<ICartUpdateOnlyRepository, CartRepository>();
+        services.AddScoped<ICartReadOnlyRepository, CartRepository>();
 
         services.Decorate<ICartUpdateOnlyRepository, ValidatedCartRepository>();
     }

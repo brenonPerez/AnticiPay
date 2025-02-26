@@ -2,9 +2,10 @@
 using AnticiPay.Domain.Enums;
 using AnticiPay.Domain.Repositories.Carts;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 
 namespace AnticiPay.Infrastructure.DataAccess.Repositories.Carts;
-internal class CartRepository : ICartWriteOnlyRepository, ICartUpdateOnlyRepository
+internal class CartRepository : ICartWriteOnlyRepository, ICartUpdateOnlyRepository, ICartReadOnlyRepository
 {
     private readonly AnticiPayDbContext _dbContext;
 
@@ -43,5 +44,12 @@ internal class CartRepository : ICartWriteOnlyRepository, ICartUpdateOnlyReposit
     public void Update(Cart cart)
     {
         _dbContext.Carts.Update(cart);
+    }
+
+    public async Task<Cart?> GetOpenCartByCompany(long companyId)
+    {
+        return await _dbContext.Carts
+            .Include(c => c.Invoices)
+            .FirstOrDefaultAsync(c => c.CompanyId == companyId && c.Status == CartStatus.Open);
     }
 }
