@@ -63,7 +63,6 @@ public class CartController : ControllerBase
 
     [HttpPost("checkout")]
     [ProducesResponseType(typeof(ResponseCartDetailsJson), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Checkout(
         [FromServices] ICartCheckoutUseCase useCase)

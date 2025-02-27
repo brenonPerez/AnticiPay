@@ -2,4 +2,6 @@
 public interface ITaxService
 {
     decimal CalculateNetValue(decimal amount, DateTime dueDate);
+
+    decimal MonthlyTaxRate { get; }
 }
