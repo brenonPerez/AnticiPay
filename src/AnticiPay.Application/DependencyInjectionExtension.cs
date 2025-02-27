@@ -5,6 +5,7 @@ using AnticiPay.Application.UseCases.Carts.GetCartOpen;
 using AnticiPay.Application.UseCases.Carts.GetCartOpenDetails;
 using AnticiPay.Application.UseCases.Carts.RemoveInvoice;
 using AnticiPay.Application.UseCases.Companies.Register;
+using AnticiPay.Application.UseCases.Invoices.GetAll;
 using AnticiPay.Application.UseCases.Invoices.GetAllNotInCart;
 using AnticiPay.Application.UseCases.Invoices.Register;
 using AnticiPay.Application.UseCases.Login.DoLogin;
@@ -27,6 +28,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IAddInvoiceToCartUseCase, AddInvoiceToCartUseCase>();
         services.AddScoped<IRemoveInvoiceFromCartUseCase, RemoveInvoiceFromCartUseCase>();
         services.AddScoped<IGetAllNotInCartInvoicesUseCase, GetAllNotInCartInvoicesUseCase>();
+        services.AddScoped<IGetAllInvoicesUseCase, GetAllInvoicesUseCase>();
         services.AddScoped<IGetCartOpenUseCase, GetCartOpenUseCase>();
         services.AddScoped<IGetCartOpenDetailsUseCase, GetCartOpenDetailsUseCase>();
         services.AddScoped<ICartCheckoutUseCase, CartCheckoutUseCase>();

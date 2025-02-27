@@ -6,4 +6,6 @@ public interface IInvoiceReadOnlyRepository
     Task<bool> ExistInvoiceWithNumber(string number);
 
     Task<List<Invoice>> GetAllNotInCartByCompany(long companyId);
+
+    Task<List<Invoice>> GetAllByCompany(long companyId);
 }
