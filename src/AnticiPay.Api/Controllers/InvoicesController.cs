@@ -1,4 +1,5 @@
-﻿using AnticiPay.Application.UseCases.Invoices.GetAllNotInCart;
+﻿using AnticiPay.Application.UseCases.Invoices.GetAll;
+using AnticiPay.Application.UseCases.Invoices.GetAllNotInCart;
 using AnticiPay.Application.UseCases.Invoices.Register;
 using AnticiPay.Communication.Requests;
 using AnticiPay.Communication.Responses;
@@ -23,11 +24,27 @@ public class InvoicesController : ControllerBase
         return Created(string.Empty, response);
     }
 
-    [HttpGet]
+    [HttpGet("not-in-cart")]
     [ProducesResponseType(typeof(ResponseInvoicesJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetAllNotInCart(
     [FromServices] IGetAllNotInCartInvoicesUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
+        if (response.Invoices.Count == 0)
+        {
+            return NoContent();
+        }
+
+        return Ok(response);
+    }
+
+    [HttpGet("all")]
+    [ProducesResponseType(typeof(ResponseInvoicesJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> GetAll(
+        [FromServices] IGetAllInvoicesUseCase useCase)
     {
         var response = await useCase.Execute();
 
