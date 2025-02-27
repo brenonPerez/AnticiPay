@@ -1,4 +1,5 @@
 ﻿using AnticiPay.Application.UseCases.Carts.AddInvoice;
+using AnticiPay.Application.UseCases.Carts.Checkout;
 using AnticiPay.Application.UseCases.Carts.GetCartOpen;
 using AnticiPay.Application.UseCases.Carts.GetCartOpenDetails;
 using AnticiPay.Application.UseCases.Carts.RemoveInvoice;
@@ -54,6 +55,18 @@ public class CartController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCartOpenDetails(
         [FromServices] IGetCartOpenDetailsUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
+        return Ok(response);
+    }
+
+    [HttpPost("checkout")]
+    [ProducesResponseType(typeof(ResponseCartDetailsJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Checkout(
+        [FromServices] ICartCheckoutUseCase useCase)
     {
         var response = await useCase.Execute();
 
