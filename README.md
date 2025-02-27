@@ -41,13 +41,13 @@ A API segue os padrões **REST**, utilizando métodos **HTTP** adequados para ga
  ```sh
     git clone https://github.com/brenonPerez/AnticiPay.git
  ```
-2. adicione a string de conexão com o MySQL no arquivo `appsettings.json`.
+2. Adicione a string de conexão com o MySQL no arquivo `appsettings.json`.
 ```
 "ConnectionStrings": {
     "Connection": "Server=localhost;Database=anticipaydb;Uid=root;Pwd=master"
 }
 ```
-3. adicione as configurações de JWT e a taxa mensal a ser cobrada no arquivo `appsettings.json`.
+3. Adicione as configurações de JWT e a taxa mensal a ser cobrada no arquivo `appsettings.json`.
 ```
 "Settings": {
     "Jwt": {
