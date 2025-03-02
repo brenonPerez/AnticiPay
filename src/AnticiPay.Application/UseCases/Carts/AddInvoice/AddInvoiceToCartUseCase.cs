@@ -50,6 +50,10 @@ public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
         {
             throw new NotFoundException(ResourceErrorMessages.INVOICE_NOT_FOUND);
         }
+        if (invoice.IsExpired)
+        {
+            throw new InvoiceExpiredException();
+        }
         return invoice;
     }
 

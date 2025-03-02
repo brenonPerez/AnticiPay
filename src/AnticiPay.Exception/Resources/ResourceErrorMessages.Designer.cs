@@ -178,6 +178,15 @@ namespace AnticiPay.Exception.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The invoice has expired..
+        /// </summary>
+        public static string INVOICE_EXPIRED {
+            get {
+                return ResourceManager.GetString("INVOICE_EXPIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a The invoice was not found..
         /// </summary>
         public static string INVOICE_NOT_FOUND {

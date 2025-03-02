@@ -16,6 +16,8 @@ public class Invoice
 
     public decimal? NetValueAtCheckout { get; set; }
 
+    public bool IsExpired => DueDate.Date <= DateTime.Now.Date;
+
     public decimal CalculateNetValue(ITaxService taxService)
     {
         return taxService.CalculateNetValue(Amount, DueDate);

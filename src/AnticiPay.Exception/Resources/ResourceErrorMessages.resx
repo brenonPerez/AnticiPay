@@ -156,6 +156,9 @@
   <data name="INVALID_PASSWORD" xml:space="preserve">
     <value>Invalid password.</value>
   </data>
+  <data name="INVOICE_EXPIRED" xml:space="preserve">
+    <value>The invoice has expired.</value>
+  </data>
   <data name="INVOICE_NOT_FOUND" xml:space="preserve">
     <value>The invoice was not found.</value>
   </data>
