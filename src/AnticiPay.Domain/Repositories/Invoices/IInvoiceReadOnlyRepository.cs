@@ -7,5 +7,7 @@ public interface IInvoiceReadOnlyRepository
 
     Task<List<Invoice>> GetAllNotInCartByCompany(long companyId);
 
-    Task<List<Invoice>> GetAllByCompany(long companyId);
+    Task<List<Invoice>> GetAllByCompany(long companyId, string? number, decimal? amount, DateTime? dueDate, int pageIndex, int pageSize);
+
+    Task<long> GetTotalCountByCompany(long companyId);
 }

@@ -19,20 +19,45 @@ internal class InvoiceRespository : IInvoiceWriteOnlyRepository, IInvoiceReadOnl
 
     public async Task<bool> ExistInvoiceWithNumber(string number)
     {
-        return await _dbContext.Invoices.AnyAsync(i => i.Number.Equals(number));
+        return await _dbContext.Invoices
+            .AsNoTracking()
+            .AnyAsync(i => i.Number.Equals(number));
     }
 
-    public async Task<List<Invoice>> GetAllByCompany(long companyId)
+    public async Task<List<Invoice>> GetAllByCompany(long companyId, string? number, decimal? amount, DateTime? dueDate, int pageIndex, int pageSize)
     {
-        return await _dbContext.Invoices
-            .Where(i => i.CompanyId == companyId)
-            .ToListAsync();
+        var query = _dbContext.Invoices.AsNoTracking().AsQueryable();
+
+        query = query.Where(i => i.CompanyId == companyId);
+
+        if (!string.IsNullOrEmpty(number))
+        {
+            query = query.Where(i => i.Number.Contains(number));
+        }
+
+        if (amount.HasValue && amount.Value != 0)
+        {
+            query = query.Where(i => i.Amount == amount);
+        }
+
+        if (dueDate.HasValue)
+        {
+            query = query.Where(i => i.DueDate == dueDate);
+        }
+
+        query = query.OrderByDescending(i => i.Id)
+                     .Skip((pageIndex) * pageSize)
+                     .Take(pageSize);
+
+        return await query.ToListAsync();
     }
 
     public async Task<List<Invoice>> GetAllNotInCartByCompany(long companyId)
     {
         return await _dbContext.Invoices
+            .AsNoTracking()
             .Where(i => i.CompanyId == companyId && i.CartId == null)
+            .OrderByDescending(i => i.Id)
             .ToListAsync();
     }
 
@@ -55,5 +80,12 @@ internal class InvoiceRespository : IInvoiceWriteOnlyRepository, IInvoiceReadOnl
     public void Update(Invoice invoice)
     {
         _dbContext.Invoices.Update(invoice);
+    }
+    public async Task<long> GetTotalCountByCompany(long companyId)
+    {
+        return await _dbContext.Invoices
+            .AsNoTracking()
+            .Where(i => i.CompanyId == companyId)
+            .CountAsync();
     }
 }

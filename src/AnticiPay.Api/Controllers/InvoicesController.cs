@@ -44,9 +44,21 @@ public class InvoicesController : ControllerBase
     [ProducesResponseType(typeof(ResponseInvoicesJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetAll(
-        [FromServices] IGetAllInvoicesUseCase useCase)
+    [FromServices] IGetAllInvoicesUseCase useCase,
+    [FromQuery] string? number = null,
+    [FromQuery] decimal? amount = null,
+    [FromQuery] DateTime? dueDate = null,
+    [FromQuery] int pageIndex = 0,
+    [FromQuery] int pageSize = 10)
     {
-        var response = await useCase.Execute();
+        var response = await useCase.Execute(new RequestFilterInvoicesJson
+        {
+            Number = number,
+            Amount = amount,
+            DueDate = dueDate,
+            PageIndex = pageIndex,
+            PageSize = pageSize
+        });
 
         if (response.Invoices.Count == 0)
         {
