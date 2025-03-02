@@ -1,5 +1,6 @@
 ﻿using AnticiPay.Application.UseCases.Carts.AddInvoice;
 using AnticiPay.Application.UseCases.Carts.Checkout;
+using AnticiPay.Application.UseCases.Carts.GetCartClosedInfo;
 using AnticiPay.Application.UseCases.Carts.GetCartOpen;
 using AnticiPay.Application.UseCases.Carts.GetCartOpenDetails;
 using AnticiPay.Application.UseCases.Carts.RemoveInvoice;
@@ -41,7 +42,6 @@ public class CartController : ControllerBase
 
     [HttpGet("cart-open")]
     [ProducesResponseType(typeof(ResponseCartJson), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCartOpen(
         [FromServices] IGetCartOpenUseCase useCase)
     {
@@ -66,6 +66,17 @@ public class CartController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Checkout(
         [FromServices] ICartCheckoutUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
+        return Ok(response);
+    }
+
+    [HttpGet("cart-closed-info")]
+    [ProducesResponseType(typeof(ResponseCartClosedInfo), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetDashboardInfo(
+        [FromServices] IGetCartClosedInfoUseCase useCase)
     {
         var response = await useCase.Execute();
 

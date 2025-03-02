@@ -12,6 +12,11 @@ internal class ValidatedCartReadRepository : ICartReadOnlyRepository
         _readOnlyRepository = readOnlyRepository;
     }
 
+    public async Task<decimal?> GetAnticipatedMonthlyTotal(long companyId, int month, int year)
+    {
+        return await _readOnlyRepository.GetAnticipatedMonthlyTotal(companyId, month, year);
+    }
+
     public async Task<Cart?> GetOpenCartByCompany(long companyId)
     {
         var cart = await _readOnlyRepository.GetOpenCartByCompany(companyId);
