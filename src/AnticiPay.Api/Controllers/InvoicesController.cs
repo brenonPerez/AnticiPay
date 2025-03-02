@@ -25,7 +25,7 @@ public class InvoicesController : ControllerBase
     }
 
     [HttpGet("not-in-cart")]
-    [ProducesResponseType(typeof(ResponseInvoicesJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseInvoicesSimulatedJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetAllNotInCart(
     [FromServices] IGetAllNotInCartInvoicesUseCase useCase)

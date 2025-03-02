@@ -3,5 +3,5 @@
 namespace AnticiPay.Application.UseCases.Invoices.GetAllNotInCart;
 public interface IGetAllNotInCartInvoicesUseCase
 {
-    Task<ResponseInvoicesJson> Execute();
+    Task<ResponseInvoicesSimulatedJson> Execute();
 }

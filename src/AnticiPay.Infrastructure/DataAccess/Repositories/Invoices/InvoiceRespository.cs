@@ -56,7 +56,7 @@ internal class InvoiceRespository : IInvoiceWriteOnlyRepository, IInvoiceReadOnl
     {
         return await _dbContext.Invoices
             .AsNoTracking()
-            .Where(i => i.CompanyId == companyId && i.CartId == null)
+            .Where(i => i.CompanyId == companyId && i.CartId == null && i.DueDate.Date > DateTime.UtcNow.Date)
             .OrderByDescending(i => i.Id)
             .ToListAsync();
     }
