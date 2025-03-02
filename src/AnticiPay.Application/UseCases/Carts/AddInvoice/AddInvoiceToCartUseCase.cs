@@ -4,6 +4,7 @@ using AnticiPay.Domain.Repositories;
 using AnticiPay.Domain.Repositories.Carts;
 using AnticiPay.Domain.Repositories.Invoices;
 using AnticiPay.Domain.Services.LoggedCompany;
+using AnticiPay.Domain.Services.TotalSpendByCompany;
 using AnticiPay.Exception.Exceptions;
 using AnticiPay.Exception.Resources;
 
@@ -13,18 +14,21 @@ public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
     private readonly IInvoiceUpdateOnlyRepository _invoiceUpdateOnlyRepository;
     private readonly ICartUpdateOnlyRepository _cartUpdateOnlyRepository;
     private readonly ICartWriteOnlyRepository _cartWriteOnlyRepository;
+    private readonly ITotalSpendByCompany _totalSpendByCompany;
     private readonly ILoggedCompany _loggedCompany;
     private readonly IUnitOfWork _unitOfWork;
 
     public AddInvoiceToCartUseCase(IInvoiceUpdateOnlyRepository invoiceReadOnlyRepository,
         ICartUpdateOnlyRepository cartUpdateOnlyRepository,
         ICartWriteOnlyRepository cartWriteOnlyRepository,
+        ITotalSpendByCompany totalSpendByCompany,
         ILoggedCompany loggedCompany,
         IUnitOfWork unitOfWork)
     {
         _invoiceUpdateOnlyRepository = invoiceReadOnlyRepository;
         _cartUpdateOnlyRepository = cartUpdateOnlyRepository;
         _cartWriteOnlyRepository = cartWriteOnlyRepository;
+        _totalSpendByCompany = totalSpendByCompany;
         _loggedCompany = loggedCompany;
         _unitOfWork = unitOfWork;
     }
@@ -35,7 +39,10 @@ public class AddInvoiceToCartUseCase : IAddInvoiceToCartUseCase
         var loggedCompany = await _loggedCompany.Get();
         var cart = await UpdateOrCreateCart(loggedCompany, invoice);
 
-        if (cart.ExceedsCreditLimit)
+        var totalSpentThisMonth = await _totalSpendByCompany.Get(loggedCompany.Id);
+        var totalAmount = cart.TotalAmount;
+
+        if (totalAmount + totalSpentThisMonth > loggedCompany.GetCreditLimit())
         {
             throw new CreditLimitExceededException();
         }

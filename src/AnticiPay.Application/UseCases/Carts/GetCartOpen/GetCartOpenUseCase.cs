@@ -23,15 +23,10 @@ public class GetCartOpenUseCase : IGetCartOpenUseCase
         var loggedCompany = await _loggedCompany.Get();
         var cart = await _cartReadOnlyRepository.GetOpenCartByCompany(loggedCompany.Id);
 
-        if (cart is null)
-        {
-            throw new NotFoundException(ResourceErrorMessages.CART_IS_EMPTY);
-        }
-
         return new ResponseCartJson
         {
-            Id = cart.Id,
-            InvoiceCount = cart.Invoices.Count,
+            Id = cart?.Id ?? 0,
+            InvoiceCount = cart?.Invoices.Count ?? 0,
         };
     }
 }
